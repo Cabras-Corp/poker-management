@@ -29,7 +29,7 @@ public class SessionController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Session> createSession(@PathVariable Long id) {
+    public ResponseEntity<Session> createId(@PathVariable Long id) {
         Optional<Session> response = sessionRepository.findById(id);
         return new ResponseEntity<>(response.get(), HttpStatus.OK);
     }
