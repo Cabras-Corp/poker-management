@@ -33,6 +33,6 @@ public class SessionController {
         Optional<Session> response = sessionRepository.findById(id);
         return new ResponseEntity<>(response.get(), HttpStatus.OK);
     }
-
+//testetandocommit
 
 }
