@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("session")
+//@Api(value = "Session")
 public class SessionController {
 
     @Autowired
