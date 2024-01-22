@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("session")
-//@Api(value = "Session")
 public class SessionController {
 
     @Autowired
@@ -30,7 +29,7 @@ public class SessionController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Session> findSessionById_(@PathVariable Long id) {
+    public ResponseEntity<Session> findSessionById(@PathVariable Long id) {
         Optional<Session> response = sessionRepository.findById(id);
         return new ResponseEntity<>(response.get(), HttpStatus.OK);
     }
