@@ -17,6 +17,7 @@ public class PlayerController {
     @Autowired
     private PlayerRepository playerRepository; // Instanciando
 
+    @GetMapping
     public ResponseEntity<String> getTest() {
         return new ResponseEntity<java.lang.String>("Teste", HttpStatus.OK);
     }
