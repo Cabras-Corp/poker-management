@@ -17,6 +17,11 @@ public class PlayerController {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @GetMapping
+    public ResponseEntity<String> getTest() {
+        return new ResponseEntity<String>("Teste", HttpStatus.OK);
+    }
+
     @PostMapping("create")
     public ResponseEntity<Void> createPlayer(String username, String email, String password) {
         playerRepository.save(new PlayerModel(username, email, password));
