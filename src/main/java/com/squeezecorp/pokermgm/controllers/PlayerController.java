@@ -35,7 +35,7 @@ public class PlayerController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping({"{id}")
+    @DeleteMapping({"{id}"})
     public ResponseEntity<Void> deletePlayer(@PathVariable Long id) {
         Optional<PlayerModel> response = playerRepository.findById(id);
         if (response.isPresent()) {
