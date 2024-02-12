@@ -1,6 +1,6 @@
 package com.squeezecorp.pokermgm.model;
 
-import com.squeezecorp.pokermgm.dto.CreateSessionRequestDTO;
+import com.squeezecorp.pokermgm.dto.session.CreateSessionRequestDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

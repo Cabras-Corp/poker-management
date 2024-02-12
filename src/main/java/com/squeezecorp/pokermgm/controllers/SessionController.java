@@ -1,13 +1,11 @@
 package com.squeezecorp.pokermgm.controllers;
 
-import com.squeezecorp.pokermgm.dto.CreateSessionRequestDTO;
-import com.squeezecorp.pokermgm.dto.UpdateSessionRequestDTO;
+import com.squeezecorp.pokermgm.dto.session.CreateSessionRequestDTO;
+import com.squeezecorp.pokermgm.dto.session.UpdateSessionRequestDTO;
 import com.squeezecorp.pokermgm.model.Session;
-import com.squeezecorp.pokermgm.repository.SessionRepository;
 import com.squeezecorp.pokermgm.service.session.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
