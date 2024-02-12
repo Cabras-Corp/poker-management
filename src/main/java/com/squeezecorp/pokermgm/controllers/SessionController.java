@@ -1,6 +1,7 @@
 package com.squeezecorp.pokermgm.controllers;
 
 import com.squeezecorp.pokermgm.dto.CreateSessionRequestDTO;
+import com.squeezecorp.pokermgm.dto.UpdateSessionRequestDTO;
 import com.squeezecorp.pokermgm.model.Session;
 import com.squeezecorp.pokermgm.repository.SessionRepository;
 import com.squeezecorp.pokermgm.service.session.SessionService;
@@ -60,7 +61,7 @@ public class SessionController {
     @Operation(summary = "Update Session by Id")
     @PutMapping("update/{id}")
     @Transactional
-    public ResponseEntity<Void> updateSession(@PathVariable("id") Long id, @RequestBody CreateSessionRequestDTO dto) {
+    public ResponseEntity<Void> updateSession(@PathVariable("id") Long id, @RequestBody UpdateSessionRequestDTO dto) {
         Optional<Session> response = sessionService.updateSession(id, dto);
         if (response.isPresent()) {
             return new ResponseEntity<>(HttpStatus.OK);

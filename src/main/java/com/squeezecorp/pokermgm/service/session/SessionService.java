@@ -1,6 +1,7 @@
 package com.squeezecorp.pokermgm.service.session;
 
 import com.squeezecorp.pokermgm.dto.CreateSessionRequestDTO;
+import com.squeezecorp.pokermgm.dto.UpdateSessionRequestDTO;
 import com.squeezecorp.pokermgm.model.Session;
 import com.squeezecorp.pokermgm.repository.SessionRepository;
 import jakarta.transaction.Transactional;
@@ -40,25 +41,18 @@ public class SessionService {
     }
 
     @Transactional
-    public Optional<Session> updateSession(Long id, CreateSessionRequestDTO dto) {
+    public Optional<Session> updateSession(Long id, UpdateSessionRequestDTO dto) {
         Optional<Session> optionalSession = sessionRepository.findById(id);
         if (optionalSession.isPresent()) {
             Session existingSession = optionalSession.get();
             existingSession.setLocal(dto.getLocal());
-            existingSession.setData_hora(dto.getData_hora());
-            existingSession.setNumero_sessao(dto.getNumero_sessao());
-            existingSession.setData_hora_fim(dto.getData_hora_fim());
+            existingSession.setDate_time(dto.getDate_time());
+            existingSession.setNumber_session(dto.getNumber_session());
+            existingSession.setEnd_date_time(dto.getEnd_date_time());
             return Optional.of(sessionRepository.save(existingSession));
         } else {
             return Optional.empty();
         }
-    }
-
-    public Optional<Session> findById(Long id) {
-        return null;
-    }
-
-    public void save(Session existingSession) {
     }
 }
 

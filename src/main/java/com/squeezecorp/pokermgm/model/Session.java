@@ -21,19 +21,19 @@ public class Session {
     @Column(name = "local", length = 50, nullable = false)
     private String local;
 
-    @Column(name = "data_hora", nullable = false, unique = true)
-    private LocalDateTime data_hora;
+    @Column(name = "date_time", nullable = false, unique = true)
+    private LocalDateTime date_time;
 
-    @Column(name = "numero_sessao", nullable = false, unique = true)
-    private Integer numero_sessao;
+    @Column(name = "number_session", nullable = false, unique = true)
+    private Integer number_session;
 
-    @Column(name= "data_hora_fim", nullable = false, unique = true)
-    private LocalDateTime data_hora_fim;
+    @Column(name= "end_date_time", nullable = false, unique = true)
+    private LocalDateTime end_date_time;
 
     public Session(CreateSessionRequestDTO dto) {
         this.local=dto.getLocal();
-        this.data_hora=dto.getData_hora();
-        this.numero_sessao=dto.getNumero_sessao();
-        this.data_hora_fim=dto.getData_hora_fim();
+        this.date_time=dto.getDate_time();
+        this.number_session=dto.getNumber_session();
+        this.end_date_time=dto.getEnd_date_time();
     }
 }
