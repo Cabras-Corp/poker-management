@@ -25,19 +25,19 @@ public class SessionController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Session> createSession(String local, LocalDateTime data_hora, Integer numero_sessao) {
+    public ResponseEntity<Session> createGame(String local, LocalDateTime data_hora, Integer numero_sessao) {
         sessionRepository.save(new Session(local, data_hora, numero_sessao));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Session> findSessionById(@PathVariable Long id) {
+    public ResponseEntity<Session> findGameById(@PathVariable Long id) {
         Optional<Session> response = sessionRepository.findById(id);
         return new ResponseEntity<>(response.get(), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-        public ResponseEntity<Void> deleteSession (@PathVariable Long id) {
+        public ResponseEntity<Void> deleteGame (@PathVariable Long id) {
         Optional<Session> response = sessionRepository.findById(id);
         if (response.isPresent()) {
             sessionRepository.deleteById(id);
@@ -48,7 +48,7 @@ public class SessionController {
     }
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> updateSession(@PathVariable Long id, String local, LocalDateTime data_hora, Integer numero_sessao) {
+    public ResponseEntity<Void> updateGame(@PathVariable Long id, String local, LocalDateTime data_hora, Integer numero_sessao) {
         Optional<Session> optionalSession = sessionRepository.findById(id);
 
         if (optionalSession.isPresent()) {

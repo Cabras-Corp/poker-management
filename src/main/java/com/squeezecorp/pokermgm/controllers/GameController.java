@@ -20,7 +20,7 @@ public class GameController {
 
     @PostMapping("create")
     public ResponseEntity<Game> createGame(LocalDateTime timeinit, Integer bigblind, Integer buyin, Integer rebuy, Double saldo) {
-        GameRepository.save(new Game(timeinit, bigblind, buyin, rebuy, saldo);
+        GameRepository.save(new Game(timeinit, bigblind, buyin, rebuy, saldo));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
