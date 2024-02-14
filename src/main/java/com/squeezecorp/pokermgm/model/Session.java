@@ -1,37 +1,39 @@
 package com.squeezecorp.pokermgm.model;
 
+import com.squeezecorp.pokermgm.dto.session.CreateSessionRequestDTO;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 
 @Entity
 @Data
+@NoArgsConstructor
+@Table(name = "session_tb")
 public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
     private Long id;
 
     @Column(name = "local", length = 50, nullable = false)
     private String local;
 
-    @Column(name = "data_hora", nullable = false, unique = true)
-    private LocalDateTime data_hora;
+    @Column(name = "date_time", nullable = false, unique = true)
+    private LocalDateTime date_time;
 
-    @Column(name = "numero_sessao", nullable = false, unique = true)
-    private Integer numero_sessao;
+    @Column(name = "number_session", nullable = false, unique = true)
+    private Integer number_session;
 
-    public Session (String local, LocalDateTime data_hora, Integer numero_sessao){
-        this.local = local;
-        this.data_hora = data_hora;
-        this.numero_sessao = numero_sessao;
+    @Column(name= "end_date_time", nullable = false, unique = true)
+    private LocalDateTime end_date_time;
+
+    public Session(CreateSessionRequestDTO dto) {
+        this.local=dto.getLocal();
+        this.date_time=dto.getDate_time();
+        this.number_session=dto.getNumber_session();
+        this.end_date_time=dto.getEnd_date_time();
     }
-
-    public Session() {
-
-    }
-
 }
