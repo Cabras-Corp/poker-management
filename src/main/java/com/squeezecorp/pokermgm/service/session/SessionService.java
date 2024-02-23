@@ -1,7 +1,7 @@
 package com.squeezecorp.pokermgm.service.session;
 
-import com.squeezecorp.pokermgm.dto.session.CreateSessionRequestDTO;
-import com.squeezecorp.pokermgm.dto.session.UpdateSessionRequestDTO;
+import com.squeezecorp.pokermgm.dtos.session.CreateSessionRequestDTO;
+import com.squeezecorp.pokermgm.dtos.session.UpdateSessionRequestDTO;
 import com.squeezecorp.pokermgm.model.Session;
 import com.squeezecorp.pokermgm.repository.SessionRepository;
 import jakarta.transaction.Transactional;
