@@ -2,6 +2,7 @@ package com.squeezecorp.pokermgm.service.session;
 
 import com.squeezecorp.pokermgm.dto.session.CreateSessionRequestDTO;
 import com.squeezecorp.pokermgm.dto.session.UpdateSessionRequestDTO;
+import com.squeezecorp.pokermgm.exception.models.SessionNotFoundException;
 import com.squeezecorp.pokermgm.model.Session;
 import com.squeezecorp.pokermgm.repository.SessionRepository;
 import jakarta.transaction.Transactional;
@@ -25,8 +26,9 @@ public class SessionService {
         return sessionRepository.findAll();
     }
 
-    public Optional<Session> findSessionById(Long id) {
-        return sessionRepository.findById(id);
+    public Session findSessionById(Long id) {
+        return sessionRepository.findById(id)
+                .orElseThrow(() -> new SessionNotFoundException(id));
     }
 
     @Transactional
