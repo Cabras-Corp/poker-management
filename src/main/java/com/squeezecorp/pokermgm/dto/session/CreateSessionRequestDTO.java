@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 public class CreateSessionRequestDTO {
 
     private String local;
-    private LocalDateTime date_time;
-    private Integer number_session;
-    private LocalDateTime end_date_time;
+    private LocalDateTime startDateTime;
+    private Integer numberSession;
+    private LocalDateTime endDateTime;
+    private Double balance;
 }

@@ -51,20 +51,18 @@ public class SessionController {
     }
 
     @Operation(summary = "Delete Session by Id")
-    @DeleteMapping({"delete/{id}"})
-    public ResponseEntity<Session> deleteSession(@PathVariable Long id) {
-        sessionService.deleteSession(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> deleteSession(@PathVariable("id") Long id) {
+        return sessionService.deleteSession(id).getStatusCode() == HttpStatus.OK ? ResponseEntity.ok().build() :
+                ResponseEntity.notFound().build();
     }
     @Operation(summary = "Update Session by Id")
     @PutMapping("update/{id}")
     @Transactional
-    public ResponseEntity<Void> updateSession(@PathVariable("id") Long id, @RequestBody UpdateSessionRequestDTO dto) {
-        Optional<Session> response = sessionService.updateSession(id, dto);
-        if (response.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Object> updateSession(@PathVariable("id") Long id,
+                                                @RequestBody UpdateSessionRequestDTO dto) {
+        return sessionService.updateSession(id, dto)
+                .map(session -> new ResponseEntity<>(HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

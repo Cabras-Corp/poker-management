@@ -6,6 +6,7 @@ import com.squeezecorp.pokermgm.model.Session;
 import com.squeezecorp.pokermgm.repository.SessionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,23 +37,24 @@ public class SessionService {
     }
 
     @Transactional
-    public void deleteSession(Long id) {
-        sessionRepository.deleteById(id);
+    public ResponseEntity<Void> deleteSession(Long id) {
+        Optional<Session> sessionOptional = sessionRepository.findById(id);
+        sessionOptional.ifPresent(session -> sessionRepository.deleteById(id));
+        return sessionOptional.map(session -> ResponseEntity.ok().<Void>build())
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Transactional
     public Optional<Session> updateSession(Long id, UpdateSessionRequestDTO dto) {
-        Optional<Session> optionalSession = sessionRepository.findById(id);
-        if (optionalSession.isPresent()) {
-            Session existingSession = optionalSession.get();
-            existingSession.setLocal(dto.getLocal());
-            existingSession.setDate_time(dto.getDate_time());
-            existingSession.setNumber_session(dto.getNumber_session());
-            existingSession.setEnd_date_time(dto.getEnd_date_time());
-            return Optional.of(sessionRepository.save(existingSession));
-        } else {
-            return Optional.empty();
-        }
+        return Optional.ofNullable(dto)
+                .flatMap(d -> sessionRepository.findById(id)
+                        .map(existingSession -> {
+                            existingSession.setLocal(d.getLocal());
+                            existingSession.setStartDateTime(d.getStartDateTime());
+                            existingSession.setEndDateTime(d.getEndDateTime());
+                            existingSession.setNumberSession(d.getNumberSession());
+                            existingSession.setBalance(d.getBalance());
+                            return sessionRepository.save(existingSession);
+                        }));
     }
 }
-

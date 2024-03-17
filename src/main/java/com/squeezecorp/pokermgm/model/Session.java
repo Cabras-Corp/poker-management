@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -21,19 +23,27 @@ public class Session {
     @Column(name = "local", length = 50, nullable = false)
     private String local;
 
-    @Column(name = "date_time", nullable = false, unique = true)
-    private LocalDateTime date_time;
+    @Column(name = "startDateTime", nullable = false, unique = true)
+    private LocalDateTime startDateTime;
 
-    @Column(name = "number_session", nullable = false, unique = true)
-    private Integer number_session;
+    @Column(name = "numberSession", nullable = false, unique = true)
+    private Integer numberSession;
 
-    @Column(name= "end_date_time", nullable = false, unique = true)
-    private LocalDateTime end_date_time;
+    @Column(name= "endDateTime", nullable = false, unique = true)
+    private LocalDateTime endDateTime;
+
+    @Column(name = "Balance", nullable = false)
+    private Double balance;
+
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
+    private List<Game> games;
 
     public Session(CreateSessionRequestDTO dto) {
         this.local=dto.getLocal();
-        this.date_time=dto.getDate_time();
-        this.number_session=dto.getNumber_session();
-        this.end_date_time=dto.getEnd_date_time();
+        this.startDateTime=dto.getStartDateTime();
+        this.numberSession =dto.getNumberSession();
+        this.endDateTime=dto.getEndDateTime();
+        this.balance=dto.getBalance();
+        this.games=new ArrayList<>();
     }
 }
