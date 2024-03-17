@@ -44,10 +44,8 @@ public class SessionController {
     @Operation(summary = "Find Session by Id")
     @GetMapping("{id}")
     public ResponseEntity<Session> findSessionById(@PathVariable Long id) {
-        Optional<Session> response = sessionService.findSessionById(id);
-        return response.map(session -> new ResponseEntity<>(session, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-
+        Session response = sessionService.findSessionById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "Delete Session by Id")
