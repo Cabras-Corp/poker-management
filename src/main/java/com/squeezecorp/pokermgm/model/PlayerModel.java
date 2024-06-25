@@ -1,14 +1,12 @@
 package com.squeezecorp.pokermgm.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "player_tb")
 public class PlayerModel {
 
@@ -22,12 +20,11 @@ public class PlayerModel {
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", length = 50, nullable = false)
+    @Column(name = "password", length = 50, nullable = false, unique = true)
     private String password;
 
-    public PlayerModel(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    @ManyToOne
+    @JoinColumn(name = "sessions")
+    private Session session;
+
 }
