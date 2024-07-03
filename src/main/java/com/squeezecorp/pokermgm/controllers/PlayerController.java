@@ -1,5 +1,6 @@
 package com.squeezecorp.pokermgm.controllers;
 
+import com.squeezecorp.pokermgm.dtos.player.requests.LoginRequestDTO;
 import com.squeezecorp.pokermgm.dtos.player.requests.PlayerCreateRequestDTO;
 import com.squeezecorp.pokermgm.dtos.player.requests.PlayerDeleteRequestDTO;
 import com.squeezecorp.pokermgm.dtos.player.requests.PlayerRequestDTO;
@@ -32,11 +33,11 @@ public class PlayerController {
     @PostMapping("create")
     public ResponseEntity<PlayerResponseDTO> createPlayer(@RequestBody PlayerCreateRequestDTO dto) {
 
-        PlayerModel player = PlayerMapper.toPlayerCreateRequest(dto);
+        PlayerModel player = PlayerMapper.toPlayerModelFromCreateRequestDTO(dto);
 
         PlayerModel createPlayer = playerService.createPlayer(player);
 
-        PlayerResponseDTO playerResponse = PlayerMapper.toPlayerResponse(createPlayer);
+        PlayerResponseDTO playerResponse = PlayerMapper.toPlayerResponseDTO(createPlayer);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(playerResponse);
     }
@@ -46,7 +47,7 @@ public class PlayerController {
     public ResponseEntity<List<PlayerResponseDTO>> findAllPlayers() {
 
         List<PlayerModel> allPlayers = playerService.findAllPlayers();
-        List<PlayerResponseDTO> playersResponse = PlayerMapper.toPacienteResponseList(allPlayers);
+        List<PlayerResponseDTO> playersResponse = PlayerMapper.toPlayerResponseDTOList(allPlayers);
 
         if (isEmpty(playersResponse)) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -78,11 +79,7 @@ public class PlayerController {
         }
 
         Optional<PlayerModel> updatedPlayer = playerService.updatePlayer(id, dto);
-        if (updatedPlayer.isPresent()) {
-            return ResponseEntity.ok(updatedPlayer.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return updatedPlayer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Delete Player by Id")
@@ -96,5 +93,13 @@ public class PlayerController {
         playerService.deletePlayer(dto);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Operation(summary = "Player Login")
+    @PostMapping("/login")
+    public ResponseEntity<PlayerModel> login(@RequestBody LoginRequestDTO loginDTO) {
+        Optional<PlayerModel> customer = playerService.authenticatePlayer(loginDTO);
+        return customer.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
     }
 }

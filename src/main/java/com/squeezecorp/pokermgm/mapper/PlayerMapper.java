@@ -7,52 +7,44 @@ import com.squeezecorp.pokermgm.model.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerMapper {
 
-    public static PlayerModel toPlayerCreateRequest(PlayerCreateRequestDTO playerRequest) {
+    public static PlayerModel toPlayerModelFromCreateRequestDTO(PlayerCreateRequestDTO playerRequest) {
+        PlayerModel model = new PlayerModel();
 
-        PlayerModel request = new PlayerModel();
+        model.setUsername(playerRequest.getUsername());
+        model.setEmail(playerRequest.getEmail());
+        model.setPassword(playerRequest.getPassword());
 
-        request.setUsername(playerRequest.getUsername());
-        request.setEmail(playerRequest.getEmail());
-        request.setPassword(playerRequest.getPassword());
-
-        return request;
-
+        return model;
     }
 
-    public static PlayerModel toPlayerRequest(PlayerRequestDTO playerRequest) {
+    public static PlayerModel toPlayerModelFromRequestDTO(PlayerRequestDTO playerRequest) {
+        PlayerModel model = new PlayerModel();
 
-        PlayerModel request = new PlayerModel();
+        model.setUsername(playerRequest.getUsername());
+        model.setEmail(playerRequest.getEmail());
+        model.setPassword(playerRequest.getPassword());
 
-        request.setUsername(playerRequest.getUsername());
-        request.setEmail(playerRequest.getEmail());
-        request.setPassword(playerRequest.getPassword());
-
-        return request;
-
+        return model;
     }
 
-    public static PlayerResponseDTO toPlayerResponse(PlayerModel playerResponse) {
+    public static PlayerResponseDTO toPlayerResponseDTO(PlayerModel playerModel) {
+        PlayerResponseDTO dto = new PlayerResponseDTO();
 
-        PlayerResponseDTO response = new PlayerResponseDTO();
+        dto.setId(playerModel.getId());
+        dto.setUsername(playerModel.getUsername());
+        dto.setEmail(playerModel.getEmail());
 
-        response.setId(playerResponse.getId());
-        response.setUsername(playerResponse.getUsername());
-        response.setEmail(playerResponse.getEmail());
-        response.setPassword(playerResponse.getPassword());
-
-        return response;
-
+        return dto;
     }
 
-    public static List<PlayerResponseDTO> toPacienteResponseList(List<PlayerModel> players) {
-        List<PlayerResponseDTO> responses = new ArrayList<>();
-        for (PlayerModel player : players) {
-            responses.add(toPlayerResponse(player));
-        }
-        return responses;
+    public static List<PlayerResponseDTO> toPlayerResponseDTOList(List<PlayerModel> players) {
+        return players.stream()
+                .map(PlayerMapper::toPlayerResponseDTO)
+                .collect(Collectors.toList());
     }
 
 }
