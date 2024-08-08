@@ -32,10 +32,8 @@ public class PlayerService {
         if (existingPlayer.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Usuário já cadastrado.");
         }
-//        PlayerModel newPlayer = new PlayerModel(player);
-
+        
         return playerRepository.save(player);
-
     }
 
     public List<PlayerModel> findAllPlayers() {
