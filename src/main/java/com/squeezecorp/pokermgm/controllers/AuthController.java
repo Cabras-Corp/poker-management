@@ -19,13 +19,6 @@ import java.util.Optional;
 public class AuthController {
     private final PlayerService customerService;
 
-//    @Operation(summary = "Register Player")
-//    @PostMapping("register")
-//    public ResponseEntity<Void> registerCustomer(@RequestBody PlayerCreateRequestDTO dto) {
-//        customerService.createPlayer(dto);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
-
     @Operation(summary = "Login Player")
     @PostMapping("login")
     public ResponseEntity<PlayerModel> login(@RequestBody LoginRequestDTO loginDTO) {
