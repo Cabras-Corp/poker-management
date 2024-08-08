@@ -28,7 +28,6 @@ public class PlayerModel {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sessions", referencedColumnName = "id")
-//    @JsonIgnoreProperties("player_id") // Usar caso definido player dentro de session para evitar serialização
     private Session session;
 
     public PlayerModel(PlayerCreateRequestDTO dto) {
