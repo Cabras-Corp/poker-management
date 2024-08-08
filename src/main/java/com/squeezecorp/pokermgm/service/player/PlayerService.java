@@ -1,11 +1,14 @@
 package com.squeezecorp.pokermgm.service.player;
 
+import com.squeezecorp.pokermgm.dtos.player.requests.LoginRequestDTO;
+import com.squeezecorp.pokermgm.dtos.player.requests.PlayerCreateRequestDTO;
 import com.squeezecorp.pokermgm.dtos.player.requests.PlayerDeleteRequestDTO;
 import com.squeezecorp.pokermgm.dtos.player.requests.PlayerRequestDTO;
 import com.squeezecorp.pokermgm.model.PlayerModel;
 import com.squeezecorp.pokermgm.repository.PlayerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,11 +30,10 @@ public class PlayerService {
         Optional<PlayerModel> existingPlayer = playerRepository.findByEmail(player.getEmail());
 
         if (existingPlayer.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Email já cadastrado");
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Usuário já cadastrado.");
         }
-
+        
         return playerRepository.save(player);
-
     }
 
     public List<PlayerModel> findAllPlayers() {
@@ -65,8 +67,17 @@ public class PlayerService {
         }
     }
 
+    public Optional<PlayerModel> authenticatePlayer(LoginRequestDTO loginDTO) {
+        Optional<PlayerModel> customer = playerRepository.findByEmail(loginDTO.getEmail());
+        if (customer.isPresent() && customer.get().getPassword().equals(loginDTO.getPassword())) {
+            return customer;
+        }
+        return Optional.empty();
+    }
+
     @Transactional
     public void deletePlayer(PlayerDeleteRequestDTO dto) {
         playerRepository.deleteById(dto.getId());
     }
+
 }
